@@ -5,6 +5,7 @@ import { LogController } from "./LogController";
 import { TabMasterManager } from "../../state/TabMasterManager";
 import { getCurrentUserId } from "../Utils";
 import { DestructiveModal } from '../../components/generic/DestructiveModal';
+import { VisibilityListenersController } from "./VisibilityListenersController";
 
 function showMigrationModal(okCallback: () => Promise<void>, cancelCallback: () => Promise<void>) {
   showModal(
@@ -43,6 +44,7 @@ export class PluginController {
   // @ts-ignore
   private static server: ServerAPI;
   private static tabMasterManager: TabMasterManager;
+  private static listenersController: VisibilityListenersController;
 
   private static steamController: SteamController;
 
@@ -54,6 +56,7 @@ export class PluginController {
     this.server = server;
     this.tabMasterManager = tabMasterManager;
     this.steamController = new SteamController();
+    this.listenersController = new VisibilityListenersController(this.tabMasterManager, this.steamController);
   }
 
   /**
@@ -122,6 +125,7 @@ export class PluginController {
    */
   static dismount(): void {
     this.tabMasterManager.disposeReactions();
+    this.listenersController.destroy();
     LogController.log("PluginController dismounted.");
   }
 }

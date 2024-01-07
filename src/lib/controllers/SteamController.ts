@@ -77,4 +77,13 @@ export class SteamController {
   async getLocalizedTags(tags: number[]): Promise<TagResponse[]> {
     return await SteamClient.Apps.GetStoreTagLocalization(tags);
   }
+
+  /**
+   * Registers a callback for controller info changes.
+   * @param callback The callback to run when controllers change.
+   * @returns A function to call to unregister the callback.
+   */
+  registerForControllerListChanges(callback: (controllers: ControllerInfo[]) => void): Unregisterer {
+    return SteamClient.Input.RegisterForControllerListChanges(callback);
+  }
 }

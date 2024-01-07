@@ -12,7 +12,7 @@ interface SteamClient {
   FriendSettings: any,
   Friends: any,
   GameSessions: GameSession,
-  Input: any,
+  Input: Input,
   InstallFolder: any,
   Installs: Installs,
   MachineStorage: any,
